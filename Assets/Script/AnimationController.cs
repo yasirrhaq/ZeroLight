@@ -5,17 +5,13 @@ using UnityEngine;
 public class AnimationController : MonoBehaviour
 {
     public Animator anim;
-    void Start()
-    {
-        anim = GetComponent<Animator>();
-    }
-
+    public CharacterController characterController;
     void Update()
     {
         attack();
     }
 
-    void attack()
+    public void attack()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -33,6 +29,27 @@ public class AnimationController : MonoBehaviour
         }else if (Input.GetMouseButtonUp(1))
         {
             resetAnimation();
+        }
+    }
+
+    public void Walking()
+    {
+        if (characterController.horizontalMove> 0)
+        {
+            anim.SetFloat("x", characterController.horizontalMove);
+        }
+        else if(characterController.horizontalMove<0)
+        {
+            anim.SetFloat("x", characterController.horizontalMove);
+        }
+
+        if (characterController.verticalMove>0)
+        {
+            anim.SetFloat("y", characterController.verticalMove);
+
+        }else if (characterController.verticalMove < 0)
+        {
+            anim.SetFloat("y", characterController.verticalMove);
         }
     }
 
