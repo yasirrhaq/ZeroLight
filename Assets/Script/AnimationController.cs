@@ -5,7 +5,7 @@ using UnityEngine;
 public class AnimationController : MonoBehaviour
 {
     public Animator anim;
-    public CharacterController characterController;
+    //public CharacterController characterController;
     void Update()
     {
         attack();
@@ -34,23 +34,23 @@ public class AnimationController : MonoBehaviour
 
     public void Walking()
     {
-        if (characterController.horizontalMove> 0)
-        {
-            anim.SetFloat("x", characterController.horizontalMove);
-        }
-        else if(characterController.horizontalMove<0)
-        {
-            anim.SetFloat("x", characterController.horizontalMove);
-        }
+        //if (characterController.horizontalMove> 0)
+        //{
+        //    anim.SetFloat("x", characterController.horizontalMove);
+        //}
+        //else if(characterController.horizontalMove<0)
+        //{
+        //    anim.SetFloat("x", characterController.horizontalMove);
+        //}
 
-        if (characterController.verticalMove>0)
-        {
-            anim.SetFloat("y", characterController.verticalMove);
+        //if (characterController.verticalMove>0)
+        //{
+        //    anim.SetFloat("y", characterController.verticalMove);
 
-        }else if (characterController.verticalMove < 0)
-        {
-            anim.SetFloat("y", characterController.verticalMove);
-        }
+        //}else if (characterController.verticalMove < 0)
+        //{
+        //    anim.SetFloat("y", characterController.verticalMove);
+        //}
     }
 
     public void resetAnimation()
