@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        //Ini dummy cmn test gerak
         transform.position += Vector3.left *enemyMovementSpeed *Time.deltaTime;
     }
 
