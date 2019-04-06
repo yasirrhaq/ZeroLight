@@ -9,12 +9,14 @@ public class Enemy : MonoBehaviour
     public float startDazedTime;
     private float dazedTime;
 
+    public Vector3 moveDirectionPush;
+    public Rigidbody2D EnemyRigidBody;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        EnemyRigidBody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -37,18 +39,17 @@ public class Enemy : MonoBehaviour
         transform.position += Vector3.left *enemyMovementSpeed *Time.deltaTime;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage)//, int force)
     {
         dazedTime = startDazedTime;
         enemyHealth -= damage;
         Debug.Log("Damage Taken : " + damage + " Enemy Health : "+ enemyHealth);
+        //Knockback(force);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Player"))
-        {
-            Debug.Log("Damage Given to Player");
-        }
-    }
+    //Premature
+    //public void Knockback(int force)
+    //{
+    //    EnemyRigidBody.AddForce(new Vector2(2, 0) * force);
+    //}
 }
