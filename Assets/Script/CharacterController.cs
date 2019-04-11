@@ -32,8 +32,6 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
-
         PlayerAttack();
     }
 
@@ -60,22 +58,17 @@ public class CharacterController : MonoBehaviour
             anim.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
             anim.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
         }
-
-
     }
 
     void PlayerAttack()
     {
-
             if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
             {
                 Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPosition.position, attackRange, whatIsEnemies);
                 for (int i = 0; i < enemiesToDamage.Length; i++)
                 {
-                enemiesToDamage[i].GetComponent<Enemy>().TakeDamage(damage);//, 3);
+                enemiesToDamage[i].GetComponent<Enemy>().TakeDamage(damage);
                 }
             }
-
     }
-
 }
