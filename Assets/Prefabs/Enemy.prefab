@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7880637353113341462}
   - component: {fileID: 5831403925945035955}
-  - component: {fileID: 705366746821744097}
   - component: {fileID: 8931065959359353585}
+  - component: {fileID: 6941032336892581167}
   - component: {fileID: 7727067640338623410}
   m_Layer: 8
   m_Name: Enemy
@@ -82,23 +82,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &705366746821744097
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 378524516677979068}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9d217b27aa982c4d84d44eafe82b836, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyHealth: 40
-  enemyMovementSpeed: 1
-  startDazedTime: 0.6
-  moveDirectionPush: {x: 0, y: 0, z: 0}
-  EnemyRigidBody: {fileID: 0}
 --- !u!61 &8931065959359353585
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -125,6 +108,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.4171462, y: 2.6057189}
   m_EdgeRadius: 0
+--- !u!114 &6941032336892581167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378524516677979068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c4151ef2ccf2e746b8f9fdcbef48ee8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyName: Mummy
+  enemyHealth: 40
+  damage: 10
+  enemyMovementSpeed: 3
+  startDazedTime: 0.6
+  dazedTime: 0
+  target: {fileID: 0}
+  chaseRadius: 4
+  attackRadius: 2
 --- !u!50 &7727067640338623410
 Rigidbody2D:
   serializedVersion: 4
