@@ -5,9 +5,7 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
     public GameObject character;
-    public AnimationController animationController;
 
-    
     public float movementSpeed;
     [HideInInspector]
     public float horizontalMove = 0f;
@@ -23,6 +21,9 @@ public class CharacterController : MonoBehaviour
 
     private Rigidbody2D rbd2;
     private Animator anim;
+
+    public float force;
+    public float knockTime;
 
     private void Start()
     {
@@ -62,13 +63,33 @@ public class CharacterController : MonoBehaviour
 
     void PlayerAttack()
     {
-            if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+        {
+            Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPosition.position, attackRange, whatIsEnemies);
+            for (int i = 0; i < enemiesToDamage.Length; i++)
             {
-                Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPosition.position, attackRange, whatIsEnemies);
-                for (int i = 0; i < enemiesToDamage.Length; i++)
-                {
                 enemiesToDamage[i].GetComponent<Enemy>().TakeDamage(damage);
+
+                Rigidbody2D enemy = enemiesToDamage[i].GetComponent<Rigidbody2D>();
+                if (enemy != null)
+                {
+                    enemy.isKinematic = false;
+                    Vector2 pushDir = enemy.transform.position - transform.position;
+                    pushDir = pushDir.normalized * force;
+                    enemy.AddForce(pushDir, ForceMode2D.Impulse);
+                    StartCoroutine(KnockController(enemy));
                 }
             }
+        }
+    }
+
+    private IEnumerator KnockController(Rigidbody2D enemy)
+    {
+        if (enemy != null)
+        {
+            yield return new WaitForSeconds(knockTime);
+            enemy.velocity = Vector2.zero;
+            enemy.isKinematic = true;
+        }
     }
 }
