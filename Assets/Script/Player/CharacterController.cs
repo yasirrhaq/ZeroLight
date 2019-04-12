@@ -85,7 +85,7 @@ public class CharacterController : MonoBehaviour
 
     private IEnumerator KnockController(Rigidbody2D enemy)
     {
-        if (enemy != null)
+        if (enemy != null )
         {
             yield return new WaitForSeconds(knockTime);
             enemy.velocity = Vector2.zero;

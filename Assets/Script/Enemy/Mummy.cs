@@ -16,7 +16,21 @@ public class Mummy : Enemy
     // Update is called once per frame
     void Update()
     {
+        CheckDazed();
         CheckDistance();
+    }
+
+    void CheckDazed()
+    {
+        if (dazedTime <= 0)
+        {
+            enemyMovementSpeed = 1.0f;
+        }
+        else
+        {
+            enemyMovementSpeed = 0;
+            dazedTime -= Time.deltaTime;
+        }
     }
    
     void CheckDistance()
@@ -31,16 +45,6 @@ public class Mummy : Enemy
     {
         dazedTime = startDazedTime;
         enemyHealth -= damage;
-
-        if (dazedTime <= 0)
-        {
-            enemyMovementSpeed = 1.0f;
-        }
-        else
-        {
-            enemyMovementSpeed = 0;
-            dazedTime -= Time.deltaTime;
-        }
 
         if (enemyHealth <= 0)
         {
