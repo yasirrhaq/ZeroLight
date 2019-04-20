@@ -6,7 +6,10 @@ public class Mummy : Enemy
 {
     public Transform target;
     public float chaseRadius;
-    public float attackRadius;
+    public float attackRange;
+
+    public Transform attackPosition;
+    public LayerMask whatIsPlayer;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,8 +19,15 @@ public class Mummy : Enemy
     // Update is called once per frame
     void Update()
     {
-        CheckDazed();
+        enemyAttackCooldown -= Time.deltaTime;
+        CheckDazed(); 
         CheckDistance();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPosition.position, attackRange);
     }
 
     void CheckDazed()
@@ -35,9 +45,26 @@ public class Mummy : Enemy
    
     void CheckDistance()
     {
-        if (Vector3.Distance(target.position, transform.position) <= chaseRadius && Vector3.Distance(target.position, transform.position) > attackRadius)
+        if (Vector3.Distance(target.position, transform.position) <= chaseRadius && Vector3.Distance(target.position, transform.position) > attackRange)
         {
             transform.position = Vector3.MoveTowards(transform.position, target.position, enemyMovementSpeed * Time.deltaTime);
+        }
+        else
+        {
+            if (enemyAttackCooldown <=0)
+            {
+                Attack(damage);
+            }
+        }
+    }
+
+    public override void Attack(int damage)
+    {
+        Collider2D playerToDamage = Physics2D.OverlapCircle(attackPosition.position, attackRange, whatIsPlayer);
+        if (playerToDamage != null)
+        {
+            playerToDamage.GetComponent<Character>().TakeDamage(damage);
+            enemyAttackCooldown = 1f / enemyAttackSpeed;
         }
     }
 
