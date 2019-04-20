@@ -17,9 +17,12 @@ public abstract class Enemy : MonoBehaviour
     public int damage;
 
     public float enemyMovementSpeed;
+    public float enemyAttackSpeed;
+    public float enemyAttackCooldown;
 
     public float startDazedTime;
     public float dazedTime;
 
     public abstract void TakeDamage(int damage);
+    public abstract void Attack(int damage);
 }
