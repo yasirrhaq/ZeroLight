@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class CharacterController : MonoBehaviour
+public class CharacterController : Character
 {
     public GameObject character;
 
-    public float movementSpeed;
     [HideInInspector]
     public float horizontalMove = 0f;
     [HideInInspector]
@@ -14,7 +14,6 @@ public class CharacterController : MonoBehaviour
     private Vector3 moveDir;
 
 
-    public int damage;
     public float attackRange;
     public Transform attackPosition;
     public LayerMask whatIsEnemies;
@@ -33,7 +32,7 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerAttack();
+        Attack(damage);
     }
 
     void FixedUpdate()
@@ -61,7 +60,7 @@ public class CharacterController : MonoBehaviour
         }
     }
 
-    void PlayerAttack()
+    override public void Attack(int damage)
     {
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
         {
@@ -81,6 +80,18 @@ public class CharacterController : MonoBehaviour
                 }
             }
         }
+    }
+
+    override public void TakeDamage(int damage)
+    {
+        playerHealth -= damage;
+
+        if (playerHealth <= 0)
+        {
+            //Die
+            Debug.Log("You Died");
+        }
+        Debug.Log("Damage Taken : " + damage + " Player Health : " + playerHealth);
     }
 
     private IEnumerator KnockController(Rigidbody2D enemy)
