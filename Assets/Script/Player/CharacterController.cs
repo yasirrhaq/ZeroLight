@@ -22,10 +22,15 @@ public class CharacterController : Character
     private Animator anim;
 
     public float force;
-    public float knockTime;
+    public float knockTime;   
+    private float speed;
+
+    public bool canMove;
+    public bool isDead;
 
     private void Start()
     {
+        canMove = true;
         rbd2 = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
     }
@@ -33,6 +38,11 @@ public class CharacterController : Character
     void Update()
     {
         Attack(damage);
+        
+        if(playerHealth <= 0)
+        {
+            isDead = true;
+        }
     }
 
     void FixedUpdate()
@@ -48,7 +58,9 @@ public class CharacterController : Character
 
     void PlayerMovement()
     {
-        rbd2.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * movementSpeed;
+        if (canMove && !isDead) { 
+        speed = movementSpeed;
+        rbd2.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * speed;
 
         anim.SetFloat("MoveX", rbd2.velocity.x);
         anim.SetFloat("MoveY", rbd2.velocity.y);
@@ -58,12 +70,20 @@ public class CharacterController : Character
             anim.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
             anim.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
         }
+        }
+        else
+        {
+            rbd2.velocity = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")) * 0;
+        }
     }
 
     override public void Attack(int damage)
     {
-        if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(0) && !isDead || Input.GetMouseButtonDown(1) &&!isDead)
         {
+            speed = 0;
+            canMove = false;
+            anim.SetBool("IsAttack", true);
             Collider2D[] enemiesToDamage = Physics2D.OverlapCircleAll(attackPosition.position, attackRange, whatIsEnemies);
             for (int i = 0; i < enemiesToDamage.Length; i++)
             {
@@ -79,6 +99,11 @@ public class CharacterController : Character
                     StartCoroutine(KnockController(enemy));
                 }
             }
+            if (Input.GetAxisRaw("Horizontal") == 1 || Input.GetAxisRaw("Horizontal") == -1 || Input.GetAxisRaw("Vertical") == 1 || Input.GetAxisRaw("Vertical") == -1)
+            {
+                anim.SetFloat("lastMoveX", Input.GetAxisRaw("Horizontal"));
+                anim.SetFloat("lastMoveY", Input.GetAxisRaw("Vertical"));
+            }
         }
     }
 
@@ -88,8 +113,7 @@ public class CharacterController : Character
 
         if (playerHealth <= 0)
         {
-            //Die
-            Debug.Log("You Died");
+            Debug.Log("Die");
         }
         Debug.Log("Damage Taken : " + damage + " Player Health : " + playerHealth);
     }
@@ -102,5 +126,12 @@ public class CharacterController : Character
             enemy.velocity = Vector2.zero;
             enemy.isKinematic = true;
         }
+    }
+
+    public void attackfalse()
+    {
+        anim.SetBool("IsAttack", false);
+        canMove = true;
+        speed = movementSpeed;
     }
 }

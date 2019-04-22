@@ -188,7 +188,7 @@ MonoBehaviour:
   dazedTime: 0
   target: {fileID: 0}
   chaseRadius: 4
-  attackRange: 0.86
+  attackRange: 0.47
   attackPosition: {fileID: 834352255}
   whatIsPlayer:
     serializedVersion: 2
