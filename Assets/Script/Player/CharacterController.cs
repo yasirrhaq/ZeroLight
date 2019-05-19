@@ -28,8 +28,12 @@ public class CharacterController : Character
     public bool canMove;
     public bool isDead;
 
+    public static CharacterController instance;
+
     private void Start()
     {
+        instance = this;
+
         canMove = true;
         rbd2 = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();

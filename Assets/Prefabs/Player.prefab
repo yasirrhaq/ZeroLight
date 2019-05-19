@@ -199,8 +199,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: Zero Light
-  playerHealth: 20
-  damage: 10
+  playerHealth: 4
+  damage: 1
   movementSpeed: 6
   character: {fileID: 8419223816903312779}
   horizontalMove: 0

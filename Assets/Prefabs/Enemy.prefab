@@ -179,8 +179,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyName: Mummy
-  enemyHealth: 40
-  damage: 10
+  enemyHealth: 2
+  damage: 1
   enemyMovementSpeed: 3
   enemyAttackSpeed: 0.1
   enemyAttackCooldown: 0
