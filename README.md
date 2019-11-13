@@ -1,2 +1,1 @@
-# OpenWorld
-Buat lomba hehehe
+# ZeroLight
